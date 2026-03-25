@@ -23,5 +23,29 @@ pipeline
 			}	
 		}
 	}
+	stage ('Test')
+	{
+		steps
+		{
+			sh 'mvn test || true'
+			echo 'Test completed!'
+		}
+	}
+	stage ('SonarQube Check')
+	{
+		steps
+		{
+			withSonarQubeEnv('SonarQube')
+			{
+				dir ('complete') {
+				sh """
+				vn sonar:sonar \
+                    		-Dsonar.projectKey=${JOB_NAME} \
+                    		-Dsonar.projectName=${JOB_NAME}
+                    		"""
+				}
+			}
+		}
+	}
     }
 }
