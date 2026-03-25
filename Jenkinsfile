@@ -39,7 +39,7 @@ pipeline
 			{
 				dir ('complete') {
 				sh """
-				vn sonar:sonar \
+				mvn sonar:sonar \
                     		-Dsonar.projectKey=${JOB_NAME} \
                     		-Dsonar.projectName=${JOB_NAME}
                     		"""
